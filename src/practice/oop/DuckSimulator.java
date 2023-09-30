@@ -10,6 +10,8 @@ package practice.oop;
  */
 import java.util.Scanner;
 
+import java.util.Scanner;
+
 public class DuckSimulator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -18,11 +20,11 @@ public class DuckSimulator {
         System.out.println("2. Rubber Duck");
         System.out.println("3. Decoy Duck");
         System.out.println("4. Model Duck");
-
+        
         int choice = scanner.nextInt();
-
+        
         Duck selectedDuck = null;
-
+        
         switch (choice) {
             case 1:
                 selectedDuck = new MallardDuck();
@@ -40,24 +42,25 @@ public class DuckSimulator {
                 break;
             default:
                 System.out.println("Pilihan tidak valid.");
-                break;
+                return; // Keluar dari program jika pilihan tidak valid.
         }
-
-        if (selectedDuck != null) {
-            selectedDuck.performQuack();
-            if (selectedDuck instanceof ModelDuck) {
+        
+        selectedDuck.performQuack();
+        selectedDuck.performFly();
+        
+        if (choice == 4) {
+            System.out.println("Apakah Anda ingin mengubah perilaku terbang Model Duck? (y/n): ");
+            char changeFlyBehavior = scanner.next().charAt(0);
+            if (changeFlyBehavior == 'y' || changeFlyBehavior == 'Y') {
+                selectedDuck.setFlyBehavior(new FlyRocketPowered());
                 selectedDuck.performFly();
-                System.out.println("Apakah Anda ingin mengubah perilaku terbang Model Duck? (y/n): ");
-                char changeFlyBehavior = scanner.next().charAt(0);
-                if (changeFlyBehavior == 'y' || changeFlyBehavior == 'Y') {
-                    selectedDuck.setFlyBehavior(new FlyRocketPowered());
-                    selectedDuck.performFly();
-                }
             }
         }
-
+        
         scanner.close();
     }
 }
+
+
 
 
